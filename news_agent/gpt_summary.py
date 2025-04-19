@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
 
 def summarize_financial_news(text,api_key):
     # client = OpenAI(api_key=os.environ.get(api_key))
@@ -17,11 +18,11 @@ def summarize_financial_news(text,api_key):
         messages=[{"role":"user","content":prompt}],
         temperature=0.7
     )
+    # return response
     return response.choices[0].message.content.strip()
 
 # testing
-if __name__ == "__main__":
-    text = "UnitedHealth Group stock had one of its worst days ever on Thursday after the healthcare giant unexpectedly cut its profit forecast for the year."
-    api_key = os.getenv("OPENAI_API_KEY")
-    summary = summarize_financial_news(text,api_key)
-    print(summary)
+# if __name__ == "__main__":
+#     text = "UnitedHealth Group stock had one of its worst days ever on Thursday after the healthcare giant unexpectedly cut its profit forecast for the year."
+#     summary = summarize_financial_news(text,api_key)
+#     print(summary)

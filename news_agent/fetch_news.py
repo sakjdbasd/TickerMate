@@ -14,10 +14,9 @@ def fetch_headline_news(api_key):
     
 
 # testing
-if __name__ == "__main__":
-    NEWSAPI_KEY = api_key
-    articles = fetch_headline_news(NEWSAPI_KEY)
-    # print(articles)
-    for idx,article in enumerate(articles,1):
-        # print(f"\n News {idx}:{article["title"]}\n{article["description"]}\n")
-        print(f"\n News {idx}: {article['title']}\n{article['description']}\n")
+# if __name__ == "__main__":
+#     articles = fetch_headline_news(api_key)
+#     # print(articles)
+#     for idx,article in enumerate(articles,1):
+#         # print(f"\n News {idx}:{article["title"]}\n{article["description"]}\n")
+#         print(f"\n News {idx}: {article['title']}\n{article['description']}\n")
