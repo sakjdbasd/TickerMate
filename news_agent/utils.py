@@ -6,7 +6,7 @@ def get_summarized_news(news_api_key, openai_api_key):
     summaries = [
         {
             "title": news["title"],
-            "summary": summarize_financial_news(news["description"] or news["content"] or "", openai_api_key)
+            "summary": summarize_financial_news(news["description"] or news["content"] or news["title"], openai_api_key)
         }
         for news in raw_news
     ]
