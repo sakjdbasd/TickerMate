@@ -8,16 +8,25 @@ api_key = os.getenv("OPENAI_API_KEY")
 def summarize_financial_news(text,api_key):
     # client = OpenAI(api_key=os.environ.get(api_key))
     client = OpenAI(api_key=api_key)
-    prompt = f"""
-    The following is an economic news article. Please summarize the essence of the article in plain language and briefly analyze its possible impact on the market:
-    """ + text + """
-    result:
-    """
+    # prompt = []
+    if text != "":
+        prompt = f"""
+        The following is an economic news article. Please summarize the essence of the article in plain language and briefly analyze its possible impact on the market:
+        """ + text + """
+        result:
+        """ 
+    else:
+        prompt = f"""
+        The following is an economic news article. If there is no text, please explain the title in details within 200 words:
+        """ + text + """
+        result:
+        """ 
     response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role":"user","content":prompt}],
-        temperature=0.7
-    )
+            model="gpt-4o",
+            messages=[{"role":"user","content":prompt}],
+            temperature=0.7
+        )
+
     # return response
     return response.choices[0].message.content.strip()
 
