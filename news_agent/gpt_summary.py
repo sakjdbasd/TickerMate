@@ -6,7 +6,7 @@ import json
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
-def summarize_financial_news(text,api_key):
+def summarize_financial_news(text,api_key,word_limit):
     client = OpenAI(api_key=api_key)
     prompt = f"""
     The following is a financial news article:
@@ -16,7 +16,7 @@ def summarize_financial_news(text,api_key):
     ----
 
     Task:
-    1. Summarize the key message in plain English (within 50 words).
+    1. Summarize the key message in plain English (within {word_limit} words).
     2. Classify the **market sentiment** as one of: Bullish / Bearish / Neutral.
     Return your answer in the following JSON format:
     {{
@@ -39,7 +39,7 @@ def summarize_financial_news(text,api_key):
     try:
         return json.loads(content)
     except json.JSONDecodeError as e:
-        # print("❌ JSON decode failed:", e)
+        # print("JSON decode failed:", e)
         lines = content.splitlines()
         summary = ""
         sentiment = "Unknown"
@@ -56,5 +56,5 @@ def summarize_financial_news(text,api_key):
 # testing
 # if __name__ == "__main__":
 #     text = "UnitedHealth Group stock had one of its worst days ever on Thursday after the healthcare giant unexpectedly cut its profit forecast for the year."
-#     summary = summarize_financial_news(text,api_key)
+#     summary = summarize_financial_news(text,api_key,20)
 #     print(summary)

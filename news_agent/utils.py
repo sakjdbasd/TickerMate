@@ -1,32 +1,32 @@
-from fetch_news import fetch_headline_news
-from gpt_summary import summarize_financial_news
-import os
-from dotenv import load_dotenv
+from datetime import datetime, timezone
 
-load_dotenv()
+def get_time_diff(publish_at_str):
+    try:
+        publish_at = datetime.strptime(publish_at_str,"%Y-%m-%dT%H:%M:%SZ")
+        publish_at = publish_at.replace(tzinfo = timezone.utc)
+        now = datetime.now(timezone.utc)
+        diff = now - publish_at
 
-def get_summarized_news(ticker, news_api_key, openai_api_key):
-    raw_news = fetch_headline_news(ticker, news_api_key)
-    summaries = []
-    for news in raw_news:
-        result = summarize_financial_news(news["description"], openai_api_key)
-        # print(result)
-        summaries.append(            
-            {
-                "title": news["title"],
-                "summary": result.get("summary",""),
-                "sentiment": result.get("sentiment","unknown"),
-                "source": news["source"]
-            })
+        minutes = diff.total_seconds() // 60
+        hours = diff.total_seconds() // 3600
+        days = diff.total_seconds() // (3600*24)
 
-    return summaries
+        if minutes < 1:
+            return "Just now"
+        elif minutes < 60:
+            return f"{int(minutes)}m ago"
+        elif hours < 24:
+            return f"{int(hours)}h ago"
+        elif days < 7:
+            return f"{int(days)}d ago"
+        else:
+            return publish_at.strftime("%Y-%m-%d")
+    except:
+        return "Unknown Time"
 
-if __name__ == "__main__":
-    summaries = get_summarized_news(
-        "MSFT",
-        news_api_key=os.getenv("NEWS_API_KEY"),
-        openai_api_key=os.getenv("OPENAI_API_KEY")
-    )
-    # print(summaries)
-    for item in summaries:
-        print(f"\n🔹 {item['title']}\n📝 {item['summary']}\n{item['sentiment']}\n{item['source']}\n")
+def parse_published_time(iso_str):
+    try:
+        dt = datetime.strptime(iso_str, "%Y-%m-%dT%H:%M:%SZ")
+        return dt.replace(tzinfo=timezone.utc)
+    except:
+        return datetime.min.replace(tzinfo=timezone.utc)

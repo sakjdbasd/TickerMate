@@ -1,6 +1,8 @@
 import requests
 import os
 from dotenv import load_dotenv
+from utils import get_time_diff
+
 
 load_dotenv()
 api_key = os.getenv('NEWS_API_KEY')
@@ -12,7 +14,6 @@ def fetch_headline_news(ticker, api_key,limit=4):
         "language": "en",
         "sortBy": "publishedAt",
         "pageSize": limit
-
     }
     headers = {"Authorization": f"Bearer {api_key}"}
     res = requests.get(url,headers=headers,params=params)
@@ -26,11 +27,13 @@ def fetch_headline_news(ticker, api_key,limit=4):
     # return articles
 
     for article in articles:
+        publishedAt = article.get("publishedAt","")
         result.append({
             "title": article.get("title", ""),
             "description": article.get("description", ""),
             "source": article.get("source", {}).get("name", ""),
-            "published_at": article.get("publishedAt", "")
+            "published_at": publishedAt,
+            "time_ago": get_time_diff(publishedAt)
         })
 
     return result
