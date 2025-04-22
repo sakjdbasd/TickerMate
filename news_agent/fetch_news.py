@@ -5,18 +5,40 @@ from dotenv import load_dotenv
 load_dotenv()
 api_key = os.getenv('NEWS_API_KEY')
 
-def fetch_headline_news(api_key):
-    url = "https://newsapi.org/v2/top-headlines?category=business&language=en"
-    headers = {"Authorization": f"Bearer {api_key}"}
-    res = requests.get(url,headers=headers)
-    # return res.json()
-    return res.json().get("articles",[])[:5]
-    
+def fetch_headline_news(ticker, api_key,limit=4):
+    url = "https://newsapi.org/v2/everything"
+    params = {
+        "q": ticker,
+        "language": "en",
+        "sortBy": "publishedAt",
+        "pageSize": limit
 
+    }
+    headers = {"Authorization": f"Bearer {api_key}"}
+    res = requests.get(url,headers=headers,params=params)
+    # return res.json()
+    result = []
+    if res.status_code == 200:
+        articles = res.json().get("articles",[])
+    else:
+        print(f"Fail to fetch news: {res.status_code}")
+        articles = []
+    # return articles
+
+    for article in articles:
+        result.append({
+            "title": article.get("title", ""),
+            "description": article.get("description", ""),
+            "source": article.get("source", {}).get("name", ""),
+            "published_at": article.get("publishedAt", "")
+        })
+
+    return result
+    
 # testing
-# if __name__ == "__main__":
-#     articles = fetch_headline_news(api_key)
-#     print(articles)
+if __name__ == "__main__":
+    # articles = fetch_headline_news("MSFT",api_key)
+    # # print(articles)
     # for idx,article in enumerate(articles,1):
-    #     # print(f"\n News {idx}:{article["title"]}\n{article["description"]}\n")
-    #     print(f"\n News {idx}: {article['title']}\n{article['description']}\n")
+    #     print(f"\n News {idx}: {article['title']}\n{article['description']}\n{article['source']['name']}\n{article['publishedAt']}\n")
+    print(fetch_headline_news("MSFT",api_key))

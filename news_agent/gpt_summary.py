@@ -1,18 +1,29 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
 def summarize_financial_news(text,api_key):
-    # client = OpenAI(api_key=os.environ.get(api_key))
     client = OpenAI(api_key=api_key)
     prompt = f"""
-        The following is an economic news article. 
-        Please summarize the essence of the article in plain language and briefly analyze its possible impact on the market
-        (within 50 words):
-        """ + text
+    The following is a financial news article:
+
+    ----
+    {text}
+    ----
+
+    Task:
+    1. Summarize the key message in plain English (within 50 words).
+    2. Classify the **market sentiment** as one of: Bullish / Bearish / Neutral.
+    Return your answer in the following JSON format:
+    {{
+        "summary": "...",
+        "sentiment": "..."
+    }}
+    """
     response = client.chat.completions.create(
             model="gpt-4o",
             messages=[{"role":"user","content":prompt}],
@@ -20,10 +31,30 @@ def summarize_financial_news(text,api_key):
         )
 
     # return response
-    return response.choices[0].message.content.strip()
+    content = response.choices[0].message.content.strip()
+    # return content
+    # result = json.loads(content)
+    # return result
+
+    try:
+        return json.loads(content)
+    except json.JSONDecodeError as e:
+        # print("❌ JSON decode failed:", e)
+        lines = content.splitlines()
+        summary = ""
+        sentiment = "Unknown"
+        for line in lines:
+            if "summary" in line.lower():
+                summary = line.split(":", 1)[-1].strip()
+            if "sentiment" in line.lower():
+                sentiment = line.split(":", 1)[-1].strip()
+        return {
+            "summary": summary or "Summary unavailable.",
+            "sentiment": sentiment or "Unknown"
+        }
 
 # testing
-if __name__ == "__main__":
-    text = "UnitedHealth Group stock had one of its worst days ever on Thursday after the healthcare giant unexpectedly cut its profit forecast for the year."
-    summary = summarize_financial_news(text,api_key)
-    print(summary)
+# if __name__ == "__main__":
+#     text = "UnitedHealth Group stock had one of its worst days ever on Thursday after the healthcare giant unexpectedly cut its profit forecast for the year."
+#     summary = summarize_financial_news(text,api_key)
+#     print(summary)
