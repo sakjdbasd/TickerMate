@@ -1,4 +1,5 @@
 import math 
+
 def simulate_dividend_growth(principal, annual_yield, years):     
     result = []     
     for year in range(1, years+1):         
