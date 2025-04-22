@@ -36,9 +36,9 @@ def fetch_headline_news(ticker, api_key,limit=4):
     return result
     
 # testing
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # articles = fetch_headline_news("MSFT",api_key)
     # # print(articles)
     # for idx,article in enumerate(articles,1):
     #     print(f"\n News {idx}: {article['title']}\n{article['description']}\n{article['source']['name']}\n{article['publishedAt']}\n")
-    print(fetch_headline_news("MSFT",api_key))
+    # print(fetch_headline_news("MSFT",api_key))

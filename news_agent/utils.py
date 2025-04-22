@@ -10,7 +10,7 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
     summaries = []
     for news in raw_news:
         result = summarize_financial_news(news["description"], openai_api_key)
-        print(result)
+        # print(result)
         summaries.append(            
             {
                 "title": news["title"],
