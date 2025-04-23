@@ -49,12 +49,12 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
 
     return summaries
 
-if __name__ == "__main__":
-    summaries = get_summarized_news(
-        "AMZN",
-        news_api_key=os.getenv("NEWS_API_KEY"),
-        openai_api_key=os.getenv("OPENAI_API_KEY"),
-    )
-    print(summaries)
+# if __name__ == "__main__":
+#     summaries = get_summarized_news(
+#         "AMZN",
+#         news_api_key=os.getenv("NEWS_API_KEY"),
+#         openai_api_key=os.getenv("OPENAI_API_KEY"),
+#     )
+#     print(summaries)
     # for item in summaries:
     #     print(f"\n🔹 {item['title']}\n📝 {item['summary']}\n{item['sentiment']}\n{item['source']}\n{item['time_ago']}\n")

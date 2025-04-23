@@ -16,7 +16,7 @@ def summarize_financial_news(text,api_key,word_limit):
     ----
 
     Task:
-    1. Summarize the key message in plain English (within {word_limit} words) and avoid using expressions like "This article states".
+    1. Summarize the key message related to the ticker in plain English (within {word_limit} words) and avoid using expressions like "This article states".
     2. Classify the **market sentiment** as one of: Bullish / Bearish / Neutral.
     Return your answer in the following JSON format:
     {{

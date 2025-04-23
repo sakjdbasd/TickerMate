@@ -4,7 +4,7 @@ import re
 def clean_gpt_text(text):
     if not text:
         return ""
-    return re.sub(r'^[^\w(]*|[^\w).?!"]*$', '', text.strip())
+    return re.sub(r'^[\W_"\']+|[\W_"\']+$', '', text.strip())
 
 
 def get_time_diff(publish_at_str):
