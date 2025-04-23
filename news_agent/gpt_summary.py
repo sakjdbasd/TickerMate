@@ -16,13 +16,14 @@ def summarize_financial_news(text,api_key,word_limit):
     ----
 
     Task:
-    1. Summarize the key message in plain English (within {word_limit} words).
+    1. Summarize the key message in plain English (within {word_limit} words) and avoid using expressions like "This article states".
     2. Classify the **market sentiment** as one of: Bullish / Bearish / Neutral.
     Return your answer in the following JSON format:
     {{
-        "summary": "...",
-        "sentiment": "..."
+        "summary": <summary_text_here>,
+        "sentiment": <Bullish|Bearish|Neutral>
     }}
+    Do not include any explanations, markdown formatting, or extra text outside the JSON.
     """
     response = client.chat.completions.create(
             model="gpt-4o",
