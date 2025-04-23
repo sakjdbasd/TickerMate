@@ -1,8 +1,8 @@
-from fetch_news import fetch_headline_news
-from gpt_summary import summarize_financial_news
+from .fetch_news import fetch_headline_news
+from .gpt_summary import summarize_financial_news
 import os
 from dotenv import load_dotenv
-from utils import parse_published_time,clean_gpt_text
+from .utils import parse_published_time,clean_gpt_text
 import yfinance as yf
 
 load_dotenv()

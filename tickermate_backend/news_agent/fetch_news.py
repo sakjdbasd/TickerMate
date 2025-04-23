@@ -1,7 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
-from utils import get_time_diff
+from .utils import get_time_diff
 
 
 load_dotenv()
