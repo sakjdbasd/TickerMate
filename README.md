@@ -1,6 +1,6 @@
 ## TickerMate
 
-## How to run the service
+## How to run the backend service
 python manage.py server
 
 ## important links
