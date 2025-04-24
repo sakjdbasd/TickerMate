@@ -28,7 +28,7 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
     }
     for idx,news in enumerate(raw_news):
         word_limit = 50 if idx == 0 else 15
-        result = summarize_financial_news(news["description"], openai_api_key,word_limit)
+        result = summarize_financial_news(news["description"], openai_api_key, word_limit)
         # summary_text = result.get("summary", "").strip().strip('"').strip("'").strip(",")
         # sentiment_text = result.get("sentiment", "").strip('"').strip("'").strip(",")
         summary_text = clean_gpt_text(result.get("summary", ""))
