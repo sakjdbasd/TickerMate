@@ -17,3 +17,6 @@ __pycache__/
 .env
 venv/
 
+# Others
+.ipynb
+

@@ -9,7 +9,7 @@ def clean_gpt_text(text):
 
 def get_time_diff(publish_at_str):
     try:
-        publish_at = datetime.strptime(publish_at_str,"%Y-%m-%dT%H:%M:%SZ")
+        publish_at = datetime.strptime(publish_at_str,"%Y-%m-%dT%H:%M:%S.%fZ")
         publish_at = publish_at.replace(tzinfo = timezone.utc)
         now = datetime.now(timezone.utc)
         diff = now - publish_at

@@ -16,7 +16,7 @@ def summarized_news_api(request):
         # return JsonResponse({"error": "Missing ticker symbol"}, status=400)
         return Response({"error": "Missing ticker symbol"}, status=status.HTTP_400_BAD_REQUEST)
 
-    news_api_key = os.getenv("NEWS_API_KEY")
+    news_api_key = os.getenv("MARKETAUX_API_KEY")
     openai_api_key = os.getenv("OPENAI_API_KEY")
 
     try:

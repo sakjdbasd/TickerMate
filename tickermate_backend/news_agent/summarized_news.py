@@ -52,7 +52,7 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
 # if __name__ == "__main__":
 #     summaries = get_summarized_news(
 #         "AMZN",
-#         news_api_key=os.getenv("NEWS_API_KEY"),
+#         news_api_key=os.getenv("MARKETAUX_API_KEY"),
 #         openai_api_key=os.getenv("OPENAI_API_KEY"),
 #     )
 #     print(summaries)
