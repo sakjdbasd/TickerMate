@@ -6,8 +6,11 @@ from .utils import parse_published_time,clean_gpt_text
 import yfinance as yf
 
 load_dotenv()
+news_api_key=os.getenv("NEWS_API_KEY")
+marketaux_api_key=os.getenv('MARKETAUX_API_KEY')
+openai_api_key=os.getenv("OPENAI_API_KEY")
 
-def get_summarized_news(ticker, news_api_key, openai_api_key):
+def get_summarized_news(ticker, news_api_key, marketaux_api_key, openai_api_key, mode):
     etf = yf.Ticker(ticker)
     info = etf.info
     fast_info = etf.fast_info
@@ -16,7 +19,7 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
     previous_close = fast_info["previousClose"]
 
     change = (last_price - previous_close) / previous_close * 100
-    raw_news = fetch_headline_news(ticker, news_api_key)
+    raw_news = fetch_headline_news(ticker, news_api_key,marketaux_api_key, mode)
     # raw_news.sort(key=lambda x: parse_published_time(x["published_at"]), reverse=False)
     summaries = {"ticker": ticker,
                  "name": info.get("shortName"),
@@ -29,8 +32,6 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
     for idx,news in enumerate(raw_news):
         word_limit = 50 if idx == 0 else 15
         result = summarize_financial_news(news["description"], openai_api_key, word_limit)
-        # summary_text = result.get("summary", "").strip().strip('"').strip("'").strip(",")
-        # sentiment_text = result.get("sentiment", "").strip('"').strip("'").strip(",")
         summary_text = clean_gpt_text(result.get("summary", ""))
         sentiment_text = clean_gpt_text(result.get("sentiment", ""))
         # print(result)
@@ -40,20 +41,21 @@ def get_summarized_news(ticker, news_api_key, openai_api_key):
             summaries["News Summary"].append(            
                 {
                     "time": news["time_ago"],
-                    # "title": news["title"],
                     "source": news["source"],
                     "sentiment": sentiment_text,
                     "summary": summary_text,
-                    # "published_at": news["published_at"],
                 })
 
     return summaries
 
+# testing
 # if __name__ == "__main__":
 #     summaries = get_summarized_news(
 #         "AMZN",
-#         news_api_key=os.getenv("NEWS_API_KEY"),
-#         openai_api_key=os.getenv("OPENAI_API_KEY"),
+#         news_api_key,
+#         marketaux_api_key,
+#         openai_api_key,
+#         "day"
 #     )
 #     print(summaries)
     # for item in summaries:
