@@ -16,7 +16,7 @@ def fetch_headline_news(ticker, news_api_key, marketaux_api_key, mode):
     elif mode == "hour":
         return fetch_headline_news_marketaux(ticker,marketaux_api_key)
     else:
-        return "Please enter the correct mode: day or hour"
+        raise ValueError("Invalid mode. Please use 'day' or 'hour'.")
 
 
 # testing
