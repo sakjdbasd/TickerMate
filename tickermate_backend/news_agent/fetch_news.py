@@ -9,15 +9,15 @@ load_dotenv()
 api_key = os.getenv('NEWS_API_KEY')
 
 def fetch_headline_news(ticker, api_key,limit=4):
-    now = datetime.now(timezone.utc)
-    today = now - timedelta(hours=18)
+    # now = datetime.now(timezone.utc)
+    # today = now - timedelta(days=1)
 
     url = "https://newsapi.org/v2/everything"
     params = {
         "q": ticker,
         "language": "en",
-        "from": today.isoformat()+"Z",
-        "to": now.isoformat()+"Z",
+        # "from": today.isoformat()+"Z",
+        # "to": now.isoformat()+"Z",
         "sortBy": "publishedAt",
         "pageSize": limit
     }
