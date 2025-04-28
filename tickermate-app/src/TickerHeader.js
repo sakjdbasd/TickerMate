@@ -8,11 +8,22 @@ const TickerHeader = ({
     sector,
     highlight
 }) => {
+
     return (
         <div>
-            <h2>Ticker Header</h2>
-            <p>{ticker ? `Ticker: ${ticker}` : 'No ticker data available'}</p>
+            <div>
+                <div>{ticker ? `Ticker: ${ticker}` : 'No ticker data available'}</div>
+                <div>{name ? `Name: ${name}` : 'No name data available'}</div>
+                <div>{price ? `Price: $${price}` : 'No price data available'}</div>
+                <div>{change ? `Change: ${change}` : 'No change data available'}</div>
+                <div>{sector ? `Sector: ${sector}` : 'No sector data available'}</div>
+            </div>
+            <div>
+                <div>AI Highlight</div>
+                <div>{highlight ? highlight : 'No AI highlight data available'}</div>
+            </div>
         </div>
+
     );
 };
 
