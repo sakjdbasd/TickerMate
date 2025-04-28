@@ -5,3 +5,4 @@ drf-yasg==1.21.10
 request==2.31.0
 openai==1.75.0
 yfinance==0.2.55
+django-cors-headers>=4.0.0
